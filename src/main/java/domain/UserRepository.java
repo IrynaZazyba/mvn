@@ -1,5 +1,6 @@
 package domain;
 
+import domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 /**

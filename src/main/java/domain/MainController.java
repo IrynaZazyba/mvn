@@ -1,11 +1,15 @@
 package domain;
 
+import domain.User;
+import domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 /**
  * Created by ladyi on 29.10.2018.
@@ -16,6 +20,13 @@ public class MainController  {
 
     @Autowired
     private UserRepository userRepository;
+
+
+    @GetMapping("/")
+    public String greeting(Map<String, Object> model)
+    {
+        return "main";
+    }
 
     @GetMapping(path="/add")
     public @ResponseBody
