@@ -1,4 +1,4 @@
-package domain;
+package domain.config;
 
 /**
  * Created by ladyi on 30.10.2018.
