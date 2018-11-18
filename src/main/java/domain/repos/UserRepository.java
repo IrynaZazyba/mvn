@@ -1,8 +1,7 @@
 package domain.repos;
 
-import domain.models.User;
+import domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by ladyi on 29.10.2018.

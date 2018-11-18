@@ -1,7 +1,7 @@
 package domain.controller;
 
-import domain.models.Role;
-import domain.models.User;
+import domain.entities.Role;
+import domain.entities.User;
 import domain.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
