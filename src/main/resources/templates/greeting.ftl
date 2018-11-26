@@ -6,5 +6,6 @@
 </div>
 <a href="/">Main page</a>
 <@l.logout />
-<span><a href="/user">User List</a></span
+<span><a href="/user">User List</a></span>
+<apan><a href="/addTests">Add tests</a></apan>
 </@c.page>

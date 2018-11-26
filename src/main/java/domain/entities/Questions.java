@@ -10,7 +10,7 @@ public class Questions {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String question;
+    private String quest;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_test")
@@ -35,12 +35,12 @@ public class Questions {
         this.test = test;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuest() {
+        return quest;
     }
 
-    public void setQuetions(String question) {
-        this.question = question;
+    public void setQuest(String question) {
+        this.quest = question;
     }
 
 
