@@ -1,9 +1,16 @@
 package domain.repos;
 
 import domain.entities.Tests;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface TestsRepository extends JpaRepository<Tests, Long>  {
-  //  Tests findById(Long id);
+import java.util.Set;
+
+public interface TestsRepository extends CrudRepository<Tests, Long> {
+    //  Tests findById(Long id);
     Tests findByTitle(String title);
+    Set<Tests> findByTypeId(Long type);
+
+
+
+
 }

@@ -1,8 +1,10 @@
 package domain.entities;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Tests {
@@ -27,8 +29,6 @@ public class Tests {
 
     @OneToMany(mappedBy = "testStTst", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Statistic> statistics = new HashSet<Statistic>();
-
-
 
 
     public Long getId() {

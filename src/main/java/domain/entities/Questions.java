@@ -2,6 +2,7 @@ package domain.entities;
 
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,5 +44,17 @@ public class Questions {
         this.quest = question;
     }
 
+    public Set<Answers> getAnswers() {
+        return answers;
+    }
 
+    public void setAnswers(Set<Answers> answers) {
+        this.answers = answers;
+    }
+
+
+//    @Override
+//    public int compare(Questions o1, Questions o2) {
+//        return o1.getId().compareTo(o2.getId());
+//    }
 }
