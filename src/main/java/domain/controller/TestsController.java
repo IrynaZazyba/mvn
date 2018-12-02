@@ -2,10 +2,7 @@ package domain.controller;
 
 
 import domain.entities.*;
-import domain.repos.AnswersRepository;
-import domain.repos.QuestionsRepository;
-import domain.repos.TestsRepository;
-import domain.repos.TestsTypeRepository;
+import domain.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,6 +26,9 @@ public class TestsController {
 
     @Autowired
     private AnswersRepository answersRepo;
+
+    @Autowired
+    private StatisticRepository statRepo;
 
     @GetMapping(path = "/addTests")
     public String registration(Map<String, Object> model) {
@@ -130,8 +130,27 @@ public class TestsController {
 
     @GetMapping(path = "testsRun")
     public String testsRun(Model model,
-                           @RequestParam(value = "typeId", required = false) Long typeId
+                           Map<String, Object> modl,
+                           @RequestParam(value = "typeId", required = false) Long typeId,
+                           @AuthenticationPrincipal User user
     ) {
+
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+
         model.addAttribute("testsType", testsTypeRepo.findAll());
 
         if (typeId != null) {
@@ -145,49 +164,81 @@ public class TestsController {
 
     @GetMapping(path = "exeTest")
     public String chooseTest(Model model,
+                             @AuthenticationPrincipal User user,
                              @RequestParam(value = "testsId", required = false) Long testsId,
                              @RequestParam(value = "questionNum", required = false) Long questNum) {
         Optional<Tests> t = testsRepo.findById(testsId);
         Tests currTest = t.get();
-        System.out.println("~~~~~~~~~~~~~~~~~~" + testsId);
-
         int count = 0;
 
         Set<Questions> quest = currTest.getQuestions();
-
-
         QComparator qc = new QComparator();
         TreeSet<Questions> tq = new TreeSet<Questions>(qc);
         tq.addAll(quest);
 
+        if (tq.size() < 3) {
+            model.addAttribute("testsType", testsTypeRepo.findAll());
+            return "testInDevelopment";
+        }
 
         for (Questions q : tq
                 ) {
-
             Set<Answers> a = q.getAnswers();
-            System.out.println("QQQQQQQQQ " + q.getId());
-            for (Answers ans : a
-                    ) {
-
-                System.out.println("AAAAAAAAAAAAAA " + ans.getId());
-
-            }
-            System.out.println("count= " + count);
-            System.out.println("questNum= " + questNum);
             if (count == questNum) {
                 model.addAttribute("quest", q);
                 model.addAttribute("answers", a);
-                model.addAttribute("testId",testsId);
-                model.addAttribute("questionNum",questNum+1);
+                model.addAttribute("testId", testsId);
+                model.addAttribute("questionNum", questNum + 1);
                 break;
             }
             count++;
-
         }
+
+        Statistic stat = new Statistic();
+        stat.setTestStUsr(user);
+        stat.setStartTime(new Date());
+        stat.setCountQuest(tq.size());
+        stat.setAmountAnswers(0);
+        stat.setRightAnswer(0);
+        stat.setTestStTst(currTest);
+        statRepo.save(stat);
         return "exeTest";
     }
 
 
+    @RequestMapping(value = "exeTest", method = RequestMethod.POST)
+    public String postExeTest(Model model,
+                              @RequestParam(value = "testsId", required = false) Long testsId,
+                              @RequestParam(value = "questionNum", required = false) Long questNum) {
+        Optional<Tests> t = testsRepo.findById(testsId);
+        Tests currTest = t.get();
+        int count = 0;
+
+        Set<Questions> quest = currTest.getQuestions();
+        QComparator qc = new QComparator();
+        TreeSet<Questions> tq = new TreeSet<Questions>(qc);
+        tq.addAll(quest);
+
+        if (tq.size() < 3) {
+            model.addAttribute("testsType", testsTypeRepo.findAll());
+            return "testInDevelopment";
+        }
+
+        for (Questions q : tq
+                ) {
+            Set<Answers> a = q.getAnswers();
+            if (count == questNum) {
+                model.addAttribute("quest", q);
+                model.addAttribute("answers", a);
+                model.addAttribute("testId", testsId);
+                model.addAttribute("questionNum", questNum + 1);
+                break;
+            }
+            count++;
+        }
+
+        return "exeTest";
+    }
 //    @GetMapping(path = "/testsRun")
 //    public String runTest(
 //            @RequestParam Long testId, @RequestParam Long queryId,

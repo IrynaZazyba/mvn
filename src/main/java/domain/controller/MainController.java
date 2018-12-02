@@ -1,13 +1,12 @@
 package domain.controller;
 
+import domain.entities.Role;
 import domain.entities.User;
 import domain.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -16,21 +15,37 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping
-public class MainController  {
+public class MainController {
 
     @Autowired
     private UserRepository userRepository;
 
 
-    @GetMapping("/")
-    public String greeting(Map<String, Object> model)
-    {
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String greeting(Map<String, Object> model,
+                           @RequestParam(value = "error", required = false) String error,
+                           @AuthenticationPrincipal User user) {
+        if (user != null) {
+            model.put("auth", true);
+            model.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    model.put("userrole", Role.ADMIN);
+                } else {
+                    model.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            model.put("auth", false);
+        }
         return "main";
     }
 
-    @GetMapping(path="/add")
-    public @ResponseBody
-    String addNewUser (@RequestParam String name, @RequestParam String email) {
+    @GetMapping(path = "/add")
+    public
+    @ResponseBody
+    String addNewUser(@RequestParam String name, @RequestParam String email) {
 //        User n = new User();
 //        n.setName(name);
 //        n.setEmail(email);
@@ -38,8 +53,10 @@ public class MainController  {
         return "Saved";
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
+    @GetMapping(path = "/all")
+    public
+    @ResponseBody
+    Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
     }
