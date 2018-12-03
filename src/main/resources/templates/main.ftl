@@ -15,9 +15,23 @@
                     <a class="nav-link" href="/testsRun">Tests</a>
                 </li></#if>
             <#if userrole?? &&userrole=="ADMIN">
-                <li class="nav-item">
-                    <a class="nav-link" href="/adminPanel">Admin panel</a>
-                </li>
+                 <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Admin panel
+                     </a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                         <a class="dropdown-item" href="#">Add user</a>
+                         <a class="dropdown-item" href="/user"">View users</a>
+                         <div class="dropdown-divider"></div>
+                         <a class="dropdown-item" href="/addTests">Add test</a>
+                         <a class="dropdown-item" href="/addTests">Edit test</a>
+                     </div>
+                 </li>
+
+            <#--<li class="nav-item">-->
+                    <#--<a class="nav-link" href="/adminPanel">Admin panel</a>-->
+                <#--</li>-->
             </#if>
             <li class="nav-item">
                 <a class="nav-link" href="#">About as</a>
@@ -27,7 +41,7 @@
             <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal"
                     data-target="#exampleModalCenter">Log in
             </button>
-        <#else> ${username}
+        <#else> <span class="headerUser">${username}</span>
         <@l.logout />
         </#if>
 
@@ -56,7 +70,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Log In</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -64,15 +78,26 @@
                 <form action="/" id="login" method="post">
                     <div class="modal-body">
 
-                        <div><label> User Name : <input type="text" name="username"/> </label></div>
-                        <div><label> Password: <input type="password" name="password"/> </label></div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Username</label>
+                            <input type="text" name="username" class="form-control" type="text"  id="formGroupExampleInput" placeholder="Username" >
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Password</label>
+                            <input type="password" name="password" class="form-control" type="text" placeholder="Password" id="formGroupExampleInput2" >
+                        </div>
+
+                        <#---->
+                        <#---->
+                        <#--<div><input type="text" name="username" class="form-control" type="text" placeholder="Username"></div>-->
+                        <#--<div><input type="password" name="password" class="form-control" type="text" placeholder="Password"></div>-->
                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                     <#--<div><input type="submit" value="Sign In"/></div>-->
 
 
                     </div>
                     <div class="modal-footer">
-                        <div><a href="/registration">Create account</a></div>
+                        <div class="create_account"><a href="/registration">Create account</a></div>
                     <#--<button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>-->
                         <button type="submit" id="subButton" class="btn btn-primary">Log In</button>
                     </div>

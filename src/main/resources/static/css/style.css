@@ -1,3 +1,21 @@
+.create_account{
+    width: 100%;
+}
+
+.create_account a:hover{
+    color: #6d7fcc;
+   text-decoration: underline;
+}
+
+.navbar-brand{
+    margin-right: 240px;
+}
+
+.headerUser {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .bodyBackgrounds{
     background-image: url(../images/android-material-tekstura.jpg);
     background-repeat: no-repeat;
@@ -174,13 +192,13 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
+/*.dropdown-toggle::after {*/
+    /*display: block;*/
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*right: 20px;*/
+    /*transform: translateY(-50%);*/
+/*}*/
 
 ul ul a {
     font-size: 0.9em !important;
@@ -282,4 +300,8 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+.mb-10{
+    margin-bottom: 15px;
 }

@@ -12,9 +12,23 @@
                     <a class="nav-link" href="/testsRun">Tests</a>
                 </li></#if>
             <#if userrole?? &&userrole=="ADMIN">
-                <li class="nav-item">
-                    <a class="nav-link" href="/adminPanel">Admin panel</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin panel
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Add user</a>
+                        <a class="dropdown-item" href="/user"">View users</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/addTests">Add test</a>
+                        <a class="dropdown-item" href="/addTests">Edit test</a>
+                    </div>
                 </li>
+
+            <#--<li class="nav-item">-->
+            <#--<a class="nav-link" href="/adminPanel">Admin panel</a>-->
+            <#--</li>-->
             </#if>
             <li class="nav-item">
                 <a class="nav-link" href="#">About as</a>
@@ -30,9 +44,9 @@
 
 
 
-        <#else> ${username}
+        <#else> <span class="headerUser">${username}</span>
             <@l.logout />
-            </#if>
+        </#if>
 
     </div>
 </nav>
