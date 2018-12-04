@@ -11,21 +11,26 @@
 
                     <form action="/exeTest" method="post">
                         <div class="row">
+                            <input type="hidden" name="testsId" value=${testId}>
+                            <input type="hidden" name="stat" value=${stat}>
                             <div class="col-12 mb-10"><h4>${quest.quest}</h4></div>
+                            <input type="hidden" name="questId" value=${questid}>
+                            <input type="hidden" name="questionNum" value=${questionNum} >
+                            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                         </div>
 
 
                         <#list answers as a>
                             <div class="row">
                                 <div class="col-12">
-                                    <p><label><input type="checkbox" name="quest">
+                                    <p><label><input type="checkbox" value=${a.id} name="option"${a?counter}>
                                     ${a.answers}</label></p></div>
                             </div></#list>
 
-                        <button type="button" class="btn btn-info">
-                            <a href="/exeTest?testsId=${testId}&questionNum=${questionNum}">
-                                Next
-                            </a>
+                        <button type="submit" class="btn btn-info"> OK
+                            <#--<a href="/exeTest?testsId=${testId}&questionNum=${questionNum}">-->
+                              <#---->
+                            <#--</a>-->
                         </button>
                     </form>
 

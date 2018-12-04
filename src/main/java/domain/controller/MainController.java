@@ -21,6 +21,28 @@ public class MainController {
     private UserRepository userRepository;
 
 
+    @GetMapping(path = "/userEdit")
+    public String adminMenu( @AuthenticationPrincipal User user,
+                             Map<String, Object> modl) {
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        return "adminmenu";
+    }
+
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String greeting(Map<String, Object> model,
                            @RequestParam(value = "error", required = false) String error,

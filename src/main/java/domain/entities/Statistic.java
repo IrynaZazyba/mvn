@@ -17,7 +17,7 @@ public class Statistic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private Date startTime;
     private Date endTime;
@@ -34,11 +34,11 @@ public class Statistic {
     @JoinColumn(name = "fk_st_user")
     private User testStUsr;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

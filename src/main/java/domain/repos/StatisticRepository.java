@@ -1,10 +1,8 @@
 package domain.repos;
 
-
-import domain.entities.Answers;
 import domain.entities.Statistic;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface StatisticRepository extends JpaRepository<Statistic, Long> {
-
+public interface StatisticRepository extends CrudRepository<Statistic, Long> {
+   // Statistic findById(Long id);
 }

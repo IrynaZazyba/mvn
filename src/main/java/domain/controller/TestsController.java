@@ -3,12 +3,19 @@ package domain.controller;
 
 import domain.entities.*;
 import domain.repos.*;
+import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.xml.ws.Response;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.*;
 
 
@@ -70,8 +77,7 @@ public class TestsController {
     }
 
 
-    @RequestMapping(value = "/addQuestion",
-            method = RequestMethod.POST)
+    @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
     public Object addQuest(@ModelAttribute Questions questions, @RequestParam String answer1, @RequestParam boolean ck_answer1,
                            @RequestParam String answer2, @RequestParam boolean ck_answer2,
                            @RequestParam String answer3, @RequestParam boolean ck_answer3,
@@ -166,6 +172,7 @@ public class TestsController {
     public String chooseTest(Model model,
                              @AuthenticationPrincipal User user,
                              @RequestParam(value = "testsId", required = false) Long testsId,
+                             @RequestParam(value = "stat", required = false) Long st,
                              @RequestParam(value = "questionNum", required = false) Long questNum) {
         Optional<Tests> t = testsRepo.findById(testsId);
         Tests currTest = t.get();
@@ -185,6 +192,8 @@ public class TestsController {
                 ) {
             Set<Answers> a = q.getAnswers();
             if (count == questNum) {
+                model.addAttribute("questid", q.getId());
+
                 model.addAttribute("quest", q);
                 model.addAttribute("answers", a);
                 model.addAttribute("testId", testsId);
@@ -193,52 +202,92 @@ public class TestsController {
             }
             count++;
         }
+        if(st == null){
+            Statistic stat = new Statistic();
+            stat.setTestStUsr(user);
+            stat.setStartTime(new Date());
+            stat.setCountQuest(tq.size());
+            stat.setAmountAnswers(0);
+            stat.setRightAnswer(0);
+            stat.setTestStTst(currTest);
+            statRepo.save(stat);
+            model.addAttribute("stat", stat.getId());
+        } else{
+            Optional <Statistic> s = statRepo.findById(st);
+            Statistic stat = s.get();
+            model.addAttribute("stat", stat.getId());
+        }
 
-        Statistic stat = new Statistic();
-        stat.setTestStUsr(user);
-        stat.setStartTime(new Date());
-        stat.setCountQuest(tq.size());
-        stat.setAmountAnswers(0);
-        stat.setRightAnswer(0);
-        stat.setTestStTst(currTest);
-        statRepo.save(stat);
+
         return "exeTest";
     }
 
 
-    @RequestMapping(value = "exeTest", method = RequestMethod.POST)
+    @RequestMapping(value = "/exeTest", method = RequestMethod.POST)
     public String postExeTest(Model model,
+                              RedirectAttributes redirectAttributes,
                               @RequestParam(value = "testsId", required = false) Long testsId,
-                              @RequestParam(value = "questionNum", required = false) Long questNum) {
-        Optional<Tests> t = testsRepo.findById(testsId);
-        Tests currTest = t.get();
-        int count = 0;
-
-        Set<Questions> quest = currTest.getQuestions();
-        QComparator qc = new QComparator();
-        TreeSet<Questions> tq = new TreeSet<Questions>(qc);
-        tq.addAll(quest);
-
-        if (tq.size() < 3) {
-            model.addAttribute("testsType", testsTypeRepo.findAll());
-            return "testInDevelopment";
+                              @RequestParam(value = "stat") Long stat,
+                              @RequestParam(value = "questId") Long questId,
+                              @RequestParam(value = "option1") Boolean option1,
+                              @RequestParam(value = "option2") Boolean option2,
+                              @RequestParam(value = "option3") Boolean option3,
+                              @RequestParam(value = "option4") Boolean option4,
+                              @RequestParam(value = "questionNum", required = false) Long questNum)
+    {
+        Optional <Statistic> s = statRepo.findById(stat);
+        Statistic currStat = s.get();
+        if(currStat == null) {
+           return "Statistic not found";
         }
 
-        for (Questions q : tq
-                ) {
-            Set<Answers> a = q.getAnswers();
-            if (count == questNum) {
-                model.addAttribute("quest", q);
-                model.addAttribute("answers", a);
-                model.addAttribute("testId", testsId);
-                model.addAttribute("questionNum", questNum + 1);
-                break;
-            }
-            count++;
+        Optional <Questions> q = questionsRepo.findById(questId);
+        Questions currQuest = q.get();
+        if(currQuest == null) {
+            return "Question not found";
         }
 
-        return "exeTest";
+       Date date = currStat.getStartTime();
+       long dateI = date.getTime()/1000;
+       long dateD = new Date().getTime()/1000;
+       long D = dateD-dateI;
+       if(D/60>10){
+           return "Время вышло";
+       }
+       System.out.println("dif : " + D);
+
+//        Optional<Tests> t = testsRepo.findById(testsId);
+//        Tests currTest = t.get();
+//        int count = 0;
+//        Set<Questions> quest = currTest.getQuestions();
+//        QComparator qc = new QComparator();
+//        TreeSet<Questions> tq = new TreeSet<Questions>(qc);
+//        tq.addAll(quest);
+//
+//        if (tq.size() < 3) {
+//            model.addAttribute("testsType", testsTypeRepo.findAll());
+//            return "testInDevelopment";
+//        }
+//
+//        for (Questions q : tq
+//                ) {
+//            Set<Answers> a = q.getAnswers();
+//            if (count == questNum) {
+//                model.addAttribute("quest", q);
+//                model.addAttribute("answers", a);
+//                model.addAttribute("testId", testsId);
+//                model.addAttribute("questionNum", questNum + 1);
+//                break;
+//            }
+//            count++;
+//        }
+        redirectAttributes.addAttribute("stat", stat);
+        redirectAttributes.addAttribute("testsId", testsId);
+        redirectAttributes.addAttribute("questionNum", questNum );
+        return "redirect:/exeTest";
     }
+
+
 //    @GetMapping(path = "/testsRun")
 //    public String runTest(
 //            @RequestParam Long testId, @RequestParam Long queryId,

@@ -21,11 +21,9 @@
                          Admin panel
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                         <a class="dropdown-item" href="#">Add user</a>
-                         <a class="dropdown-item" href="/user"">View users</a>
+                         <a class="dropdown-item" href="/userEdit">Edit users</a>
                          <div class="dropdown-divider"></div>
-                         <a class="dropdown-item" href="/addTests">Add test</a>
-                         <a class="dropdown-item" href="/addTests">Edit test</a>
+                         <a class="dropdown-item" href="/addTests">Edit tests</a>
                      </div>
                  </li>
 

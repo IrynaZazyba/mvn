@@ -1,8 +1,15 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/navBar.ftl" as n>
+<#import "parts/adminMenu.ftl" as am>
+<#import "parts/login.ftl" as l>
 <@c.page>
-List of users
 
-<table>
+<@n.navBar />
+<@am.adminMenu>
+
+    List of users
+
+    <table>
     <thead>
     <tr>
         <th>Name</th>
@@ -21,4 +28,5 @@ List of users
         </#list>
     </tbody>
 </table>
+</@am.adminMenu>
 </@c.page>
