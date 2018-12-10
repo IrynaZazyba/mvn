@@ -3,19 +3,14 @@ package domain.controller;
 
 import domain.entities.*;
 import domain.repos.*;
-import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.xml.ws.Response;
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.*;
 
 
@@ -37,10 +32,151 @@ public class TestsController {
     @Autowired
     private StatisticRepository statRepo;
 
-    @GetMapping(path = "/addTests")
-    public String registration(Map<String, Object> model) {
+    @GetMapping(path = "/addTestsType")
+    public String addTests(@AuthenticationPrincipal User user,
+                           Map<String, Object> modl,
+                           @RequestParam(value = "result", required = false) String result
+    ) {
+        if(result!=null){
+            modl.put("result", result);
+        }
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+        return "addTestsType";
+    }
+
+
+    @RequestMapping(value = "/addTestsType", method = RequestMethod.POST)
+    public Object addTypeTests(@AuthenticationPrincipal User user,
+                               @RequestParam String type,
+                               Map<String, Object> modl
+    ) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        boolean result = true;
+        Tests tests = new Tests();
+        TestsType testsType = testsTypeRepo.findByType(type);
+        if (testsType != null || type=="") {
+            result = false;
+        } else {
+            TestsType t = new TestsType();
+            t.setType(type);
+            tests.setType(t);
+            testsTypeRepo.save(t);
+        }
+        return "redirect:/addTestsType?result=" + result;
+    }
+
+
+    @GetMapping(path = "/addTestsTitle")
+    public String addTestsTitle(@AuthenticationPrincipal User user,
+                                Map<String, Object> modl,
+                                @RequestParam(value = "result", required = false) String result
+    ) {
+
+        if(result!=null){
+            modl.put("result", result);
+        }
+
+
         Iterable<TestsType> testsType = testsTypeRepo.findAll();
-        model.put("testsType", testsType);
+        modl.put("testsType", testsType);
+
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+        return "addTestsTitle";
+    }
+
+    @RequestMapping(value = "addTestsTitle", method = RequestMethod.POST)
+    public Object addTestsTitle(@AuthenticationPrincipal User user,
+                                @ModelAttribute Tests test,
+                                Map<String, Object> modl,
+                                Model model
+    ) {
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        boolean result =true;
+        if(test.getTitle()!=null && test.getTitle()!=""){
+            test.setAuthor(user);
+            testsRepo.save(test);
+          }else{
+            result=false;
+        }
+
+        return "redirect:/addTestsTitle?result=" + result;
+    }
+
+    @GetMapping(path = "/addTests")
+    public String registration(@AuthenticationPrincipal User user,
+                               Map<String, Object> modl) {
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+//        Iterable<TestsType> testsType = testsTypeRepo.findAll();
+//        modl.put("testsType", testsType);
         return "addTests";
     }
 
@@ -77,7 +213,7 @@ public class TestsController {
     }
 
 
-    @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/addQuestionAnswer", method = RequestMethod.POST)
     public Object addQuest(@ModelAttribute Questions questions, @RequestParam String answer1, @RequestParam boolean ck_answer1,
                            @RequestParam String answer2, @RequestParam boolean ck_answer2,
                            @RequestParam String answer3, @RequestParam boolean ck_answer3,
@@ -122,14 +258,28 @@ public class TestsController {
     }
 
 
-    @GetMapping(path = "/addQuestion")
-    public String addGetQuest(Map<String, Object> model,
-                              @RequestParam Long id) {
+    @GetMapping(path = "/addQuestionAnswer")
+    public String addGetQuest(@AuthenticationPrincipal User usr,
+                              Map<String, Object> modl
+    ) {
+        if (usr != null) {
+            modl.put("auth", true);
+            modl.put("username", usr.getUsername());
+            for (Role r : usr.getRoles()
+                    ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
 
-        Optional<Tests> test = testsRepo.findById(id);
-        Tests TestObj = test.get();
-        model.put("testId", TestObj.getId());
-        model.put("testTitle", TestObj.getTitle());
+        Iterable<Tests> tests = testsRepo.findAll();
+        modl.put("tests", tests);
+
         return "addQuestion";
     }
 
@@ -140,7 +290,6 @@ public class TestsController {
                            @RequestParam(value = "typeId", required = false) Long typeId,
                            @AuthenticationPrincipal User user
     ) {
-
         if (user != null) {
             modl.put("auth", true);
             modl.put("username", user.getUsername());
@@ -173,10 +322,33 @@ public class TestsController {
                              @AuthenticationPrincipal User user,
                              @RequestParam(value = "testsId", required = false) Long testsId,
                              @RequestParam(value = "stat", required = false) Long st,
-                             @RequestParam(value = "questionNum", required = false) Long questNum) {
+                             @RequestParam(value = "questionNum", required = false) Long questNum,
+                             Map<String, Object> modl,
+                             @RequestParam(value = "typeId", required = false) Long typeId) {
+
+
+        if (st == null && questNum != 0) {
+            return "error tt";
+        }
         Optional<Tests> t = testsRepo.findById(testsId);
         Tests currTest = t.get();
         int count = 0;
+
+        if (questNum == 0 && st == null) {
+            Set stat_run = statRepo.findByUserAndTest(user, currTest);
+            Iterator<Statistic> iterator = stat_run.iterator();
+            if (stat_run.size() > 0) {
+                while (iterator.hasNext()) {
+                    Statistic setElement = iterator.next();
+                    model.addAttribute("statId", setElement.getId());
+                    model.addAttribute("questNum", setElement.getAmountAnswers());
+                    model.addAttribute("testId", setElement.getTestStTst().getId());
+                }
+                return "Test_is_started";
+            }
+
+        }
+
 
         Set<Questions> quest = currTest.getQuestions();
         QComparator qc = new QComparator();
@@ -185,6 +357,21 @@ public class TestsController {
 
         if (tq.size() < 3) {
             model.addAttribute("testsType", testsTypeRepo.findAll());
+
+                if (user != null) {
+                    modl.put("auth", true);
+                    modl.put("username", user.getUsername());
+                    for (Role r : user.getRoles()
+                            ) {
+                        if (r.compareTo(Role.ADMIN) == 0) {
+                            modl.put("userrole", Role.ADMIN);
+                        } else {
+                            modl.put("userrole", Role.USER);
+                        }
+                    }
+                } else {
+                    modl.put("auth", false);
+                }
             return "testInDevelopment";
         }
 
@@ -202,7 +389,7 @@ public class TestsController {
             }
             count++;
         }
-        if(st == null){
+        if (st == null) {
             Statistic stat = new Statistic();
             stat.setTestStUsr(user);
             stat.setStartTime(new Date());
@@ -212,9 +399,12 @@ public class TestsController {
             stat.setTestStTst(currTest);
             statRepo.save(stat);
             model.addAttribute("stat", stat.getId());
-        } else{
-            Optional <Statistic> s = statRepo.findById(st);
+        } else {
+            Optional<Statistic> s = statRepo.findById(st);
             Statistic stat = s.get();
+            if (stat.getCountQuest() == stat.getAmountAnswers() || stat.getAmountAnswers() != questNum) {
+                return "test пройден";
+            }
             model.addAttribute("stat", stat.getId());
         }
 
@@ -222,103 +412,95 @@ public class TestsController {
         return "exeTest";
     }
 
+    @GetMapping(path = "/exeTestCheck")
+    public String exeTestCheck() {
+        return "testEnded";
+    }
 
-    @RequestMapping(value = "/exeTest", method = RequestMethod.POST)
+    @RequestMapping(value = "/exeTestCheck", method = RequestMethod.POST)
     public String postExeTest(Model model,
                               RedirectAttributes redirectAttributes,
                               @RequestParam(value = "testsId", required = false) Long testsId,
                               @RequestParam(value = "stat") Long stat,
                               @RequestParam(value = "questId") Long questId,
-                              @RequestParam(value = "option1") Boolean option1,
-                              @RequestParam(value = "option2") Boolean option2,
-                              @RequestParam(value = "option3") Boolean option3,
-                              @RequestParam(value = "option4") Boolean option4,
-                              @RequestParam(value = "questionNum", required = false) Long questNum)
-    {
-        Optional <Statistic> s = statRepo.findById(stat);
+                              @RequestParam(value = "option1", required = false) Long option1,
+                              @RequestParam(value = "option2", required = false) Long option2,
+                              @RequestParam(value = "option3", required = false) Long option3,
+                              @RequestParam(value = "option4", required = false) Long option4,
+                              @RequestParam(value = "questionNum", required = false) Long questNum) {
+        Optional<Statistic> s = statRepo.findById(stat);
         Statistic currStat = s.get();
-        if(currStat == null) {
-           return "Statistic not found";
+        if (currStat == null) {
+            return "Statistic not found";
         }
 
-        Optional <Questions> q = questionsRepo.findById(questId);
+        Optional<Questions> q = questionsRepo.findById(questId);
         Questions currQuest = q.get();
-        if(currQuest == null) {
+        if (currQuest == null) {
             return "Question not found";
         }
 
-       Date date = currStat.getStartTime();
-       long dateI = date.getTime()/1000;
-       long dateD = new Date().getTime()/1000;
-       long D = dateD-dateI;
-       if(D/60>10){
-           return "Время вышло";
-       }
-       System.out.println("dif : " + D);
+        Date date = currStat.getStartTime();
+        long dateI = date.getTime() / 1000;
+        long dateD = new Date().getTime() / 1000;
+        long D = dateD - dateI;
+        if (D / 60 > 10) {
+            return "Время вышло";
+        }
 
-//        Optional<Tests> t = testsRepo.findById(testsId);
-//        Tests currTest = t.get();
-//        int count = 0;
-//        Set<Questions> quest = currTest.getQuestions();
-//        QComparator qc = new QComparator();
-//        TreeSet<Questions> tq = new TreeSet<Questions>(qc);
-//        tq.addAll(quest);
-//
-//        if (tq.size() < 3) {
-//            model.addAttribute("testsType", testsTypeRepo.findAll());
-//            return "testInDevelopment";
-//        }
-//
-//        for (Questions q : tq
-//                ) {
-//            Set<Answers> a = q.getAnswers();
-//            if (count == questNum) {
-//                model.addAttribute("quest", q);
-//                model.addAttribute("answers", a);
-//                model.addAttribute("testId", testsId);
-//                model.addAttribute("questionNum", questNum + 1);
-//                break;
-//            }
-//            count++;
-//        }
+        int rightAns = 1;
+        if (currQuest.getAnswers() != null) {
+
+            for (Answers a : currQuest.getAnswers()) {
+                if (a.isTrues() == true) {
+                    if (a.getId() != option1 && a.getId() != option2 &&
+                            a.getId() != option3 && a.getId() != option4) {
+                        rightAns = 0;
+                    }
+                }
+            }
+
+        }
+
+        currStat.setStartTime(new Date());
+        currStat.setAmountAnswers(currStat.getAmountAnswers() + 1);
+        if (rightAns == 1) {
+            currStat.setRightAnswer(currStat.getRightAnswer() + 1);
+        }
+        statRepo.save(currStat);
+        if (currStat.getCountQuest() == currStat.getAmountAnswers()) {
+            currStat.setEndTime(new Date());
+            statRepo.save(currStat);
+            float res = ((float) currStat.getRightAnswer() / (float) currStat.getCountQuest()) * 100;
+
+            model.addAttribute("result", String.format("%.2f", res));
+
+            return "testEnded";
+        }
         redirectAttributes.addAttribute("stat", stat);
         redirectAttributes.addAttribute("testsId", testsId);
-        redirectAttributes.addAttribute("questionNum", questNum );
+        redirectAttributes.addAttribute("questionNum", questNum);
         return "redirect:/exeTest";
     }
 
+    @GetMapping(path = "stopTest")
+    public String chooseTest(Model model,
+                             @AuthenticationPrincipal User user,
+                             @RequestParam(value = "testsId") Long testsId,
+                             @RequestParam(value = "stat") Long st
+    ) {
+        Optional<Statistic> s = statRepo.findById(st);
+        Statistic stat = s.get();
+        System.out.println(stat.getTestStUsr().getId());
+        System.out.println(user.getId());
+        if (stat.getTestStUsr().getId() != user.getId()) {
+            return "error_e";
+        }
+        stat.setEndTime(new Date());
+        stat.setAmountAnswers(stat.getCountQuest());
+        statRepo.save(stat);
+        return "redirect:/exeTest?testsId=" + testsId + "&questionNum=0";
+    }
 
-//    @GetMapping(path = "/testsRun")
-//    public String runTest(
-//            @RequestParam Long testId, @RequestParam Long queryId,
-//            Map<String, Object> model) {
-//        Optional<Tests> tests = testsRepo.findById(testId);
-//        if (tests == null) {
-//            model.put("error", "Test not exist!");
-//        } else {
-//            Tests TestObj = tests.get();
-//            model.put("testId", TestObj.getId());
-//            model.put("testTitle", TestObj.getTitle());
-//            Set<Questions> qest = TestObj.getQuestions();
-//            boolean fl = false;
-//            boolean start = false;
-//            for (Questions qes : qest) {
-//                if (!start) {
-//                    model.put("queryTitle", qes.getQuest());
-//                    model.put("queryId", qes.getId());
-//                    start = true;
-//                }
-//                if (fl) {
-//                    model.put("queryId", qes.getId());
-//                    model.put("queryTitle", qes.getQuest());
-//                }
-//                if (queryId == qes.getId()) {
-//                    fl = true;
-//                }
-//            }
-//        }
-
-//        return "testsRun";
-//    }
 
 }

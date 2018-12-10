@@ -9,7 +9,7 @@
                 <div class="jumbotron mt-3">
 
 
-                    <form action="/exeTest" method="post">
+                    <form action="/exeTestCheck" method="post">
                         <div class="row">
                             <input type="hidden" name="testsId" value=${testId}>
                             <input type="hidden" name="stat" value=${stat}>
@@ -23,7 +23,7 @@
                         <#list answers as a>
                             <div class="row">
                                 <div class="col-12">
-                                    <p><label><input type="checkbox" value=${a.id} name="option"${a?counter}>
+                                    <p><label><input type="checkbox" value=${a.id} name="option${a?counter}">
                                     ${a.answers}</label></p></div>
                             </div></#list>
 

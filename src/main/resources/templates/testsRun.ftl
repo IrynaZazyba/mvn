@@ -9,7 +9,6 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Menu</h3>
             <strong>BS</strong>
         </div>
 

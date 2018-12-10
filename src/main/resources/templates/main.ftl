@@ -1,6 +1,7 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/login.ftl" as l>
 <@c.page>
+<div class="color-for-bar"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
     <a class="navbar-brand" href="#">Test</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -36,10 +37,10 @@
             </li>
         </ul>
         <#if auth==false>
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal"
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0 but" data-toggle="modal"
                     data-target="#exampleModalCenter">Log in
             </button>
-        <#else> <span class="headerUser">${username}</span>
+        <#else> <span class="headerUser badge bg-color">${username}</span>
         <@l.logout />
         </#if>
 
@@ -97,7 +98,7 @@
                     <div class="modal-footer">
                         <div class="create_account"><a href="/registration">Create account</a></div>
                     <#--<button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>-->
-                        <button type="submit" id="subButton" class="btn btn-primary">Log In</button>
+                        <button type="submit" id="subButton" class="btn btn-primary but">Log In</button>
                     </div>
                 </form>
             </div>

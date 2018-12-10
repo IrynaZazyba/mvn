@@ -1,4 +1,5 @@
 <#macro navBar>
+<div class="color-for-bar"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
     <a class="navbar-brand" href="#">Test</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -33,16 +34,10 @@
             </li>
         </ul>
         <#if auth==false>
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal"
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0 but" data-toggle="modal"
                     data-target="#exampleModalCenter">Log in
             </button>
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal"
-                    data-target="#exampleModalCenter">Registration
-            </button>
-
-
-
-        <#else> <span class="headerUser">${username}</span>
+                   <#else> <span class="headerUser">${username}</span>
             <@l.logout />
         </#if>
 
