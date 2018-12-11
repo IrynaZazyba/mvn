@@ -37,7 +37,7 @@
             </li>
         </ul>
         <#if auth==false>
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0 but" data-toggle="modal"
+            <button type="button" class="btn my-2 my-sm-0 but" data-toggle="modal"
                     data-target="#exampleModalCenter">Log in
             </button>
         <#else> <span class="headerUser badge bg-color">${username}</span>
@@ -51,7 +51,7 @@
     <div class="row align-items-center heightAll">
         <div class="col"></div>
     <#--<#if auth==false>-->
-        <div class="col-6 text-center"><h1 class="font-weight-bold text-white-50 ">Hi, nice to meet you!</h1>
+        <div class="col-6 text-center"><h1 class="font-weight-bold ">Hi, nice to meet you!</h1>
         <#--<button type="button" class="btn btn-outline-light btn-lg" data-toggle="modal"-->
         <#--data-target="#exampleModalCenter">Get started-->
         <#--</button>-->

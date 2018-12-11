@@ -26,6 +26,18 @@
     text-align: center;
 }
 
+.timer{
+    padding-top: 15px;
+    padding-bottom: 10px;
+    color: #0097a7;
+    text-align: right;
+    font-size: 17px;
+}
+.timer span{
+    color: #d9534f;
+    font-size: 20px;
+}
+
 .heightAll {
     height: 100vh;
 }
@@ -331,6 +343,12 @@ a.article:hover {
 .but {
     color: #0097a7 !important;
     border-color: #0097a7 !important;
+    background-color: white;
+}
+
+.but:active{
+    background-color: #56c8d8;
+
 }
 
 .but:hover {
@@ -363,12 +381,18 @@ a.article:hover {
     color: crimson;
 }
 
+
+
 .greenColor{
     color: #0097a7;
 }
 
 .mt10{
     margin-top: 10px;
+}
+
+.mt5{
+    margin-top: 5px;
 }
 
 .shape{
@@ -413,12 +437,6 @@ a.article:hover {
     border-color: rgba(255,255,255,0) #d9534f rgba(255,255,255,0) rgba(255,255,255,0);
 }
 
-.project-success {	border-color: #5cb85c; }
-.project-success .shape{
-    border-color: transparent #5cb85c transparent transparent;
-    border-color: rgba(255,255,255,0) #5cb85c rgba(255,255,255,0) rgba(255,255,255,0);
-}
-
 .project-primary {	border-color: #428bca; }
 .project-primary .shape{
     border-color: transparent #428bca transparent transparent;
@@ -454,4 +472,15 @@ a.article:hover {
 }
 .tc{
     text-align: center;
+}
+
+.fr{
+ float: right;
+}
+
+.mr7{
+    margin-right: 7px;
+}
+.mr5{
+    margin-right: 5px;
 }

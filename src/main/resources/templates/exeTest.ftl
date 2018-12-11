@@ -3,17 +3,22 @@
 <@c.page>
 <div class="container">
     <div class="row">
+        <div class="col-12 timer">
+            Время на вопрос <span id="timerQ"></span>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12">
             <#if quest??>
 
                 <div class="jumbotron mt-3">
 
 
-                    <form action="/exeTestCheck" method="post">
+                    <form id="qForm" action="/exeTestCheck" method="post">
                         <div class="row">
                             <input type="hidden" name="testsId" value=${testId}>
                             <input type="hidden" name="stat" value=${stat}>
-                            <div class="col-12 mb-10"><h4>${quest.quest}</h4></div>
+                            <div class="col-12 mb-10"><h4>#${questionNum-1}: ${quest.quest}</h4></div>
                             <input type="hidden" name="questId" value=${questid}>
                             <input type="hidden" name="questionNum" value=${questionNum} >
                             <input type="hidden" name="_csrf" value="${_csrf.token}"/>

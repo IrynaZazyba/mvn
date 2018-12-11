@@ -5,6 +5,8 @@ import domain.entities.*;
 import domain.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -322,6 +324,7 @@ public class TestsController {
                              @AuthenticationPrincipal User user,
                              @RequestParam(value = "testsId", required = false) Long testsId,
                              @RequestParam(value = "stat", required = false) Long st,
+                             @RequestParam(value = "time", required = false) Long tt,
                              @RequestParam(value = "questionNum", required = false) Long questNum,
                              Map<String, Object> modl,
                              @RequestParam(value = "typeId", required = false) Long typeId) {
@@ -358,7 +361,8 @@ public class TestsController {
         if (tq.size() < 3) {
             model.addAttribute("testsType", testsTypeRepo.findAll());
 
-                if (user != null) {
+                if (user != null)
+                {
                     modl.put("auth", true);
                     modl.put("username", user.getUsername());
                     for (Role r : user.getRoles()
@@ -372,6 +376,7 @@ public class TestsController {
                 } else {
                     modl.put("auth", false);
                 }
+
             return "testInDevelopment";
         }
 
@@ -440,14 +445,6 @@ public class TestsController {
             return "Question not found";
         }
 
-        Date date = currStat.getStartTime();
-        long dateI = date.getTime() / 1000;
-        long dateD = new Date().getTime() / 1000;
-        long D = dateD - dateI;
-        if (D / 60 > 10) {
-            return "Время вышло";
-        }
-
         int rightAns = 1;
         if (currQuest.getAnswers() != null) {
 
@@ -462,11 +459,12 @@ public class TestsController {
 
         }
 
-        currStat.setStartTime(new Date());
+
         currStat.setAmountAnswers(currStat.getAmountAnswers() + 1);
-        if (rightAns == 1) {
+        if (rightAns == 1 && checkTime(currStat)) {
             currStat.setRightAnswer(currStat.getRightAnswer() + 1);
         }
+        currStat.setStartTime(new Date());
         statRepo.save(currStat);
         if (currStat.getCountQuest() == currStat.getAmountAnswers()) {
             currStat.setEndTime(new Date());
@@ -483,12 +481,25 @@ public class TestsController {
         return "redirect:/exeTest";
     }
 
+
+    private Boolean checkTime(Statistic currStat){
+        Date date = currStat.getStartTime();
+        long dateI = date.getTime() / 1000;
+        long dateD = new Date().getTime() / 1000;
+        long D = dateD - dateI;
+        if (D / 60 > 11) {
+            return false;
+        }
+        return true;
+    }
+
     @GetMapping(path = "stopTest")
     public String chooseTest(Model model,
                              @AuthenticationPrincipal User user,
                              @RequestParam(value = "testsId") Long testsId,
                              @RequestParam(value = "stat") Long st
-    ) {
+    )
+    {
         Optional<Statistic> s = statRepo.findById(st);
         Statistic stat = s.get();
         System.out.println(stat.getTestStUsr().getId());
@@ -502,5 +513,21 @@ public class TestsController {
         return "redirect:/exeTest?testsId=" + testsId + "&questionNum=0";
     }
 
+    @RequestMapping(value = "/checkTimer", method = RequestMethod.GET, produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Long> checkTimer(Model model,
+                                           @RequestParam(value = "stat") Long st)
+    {
+        Optional<Statistic> s = statRepo.findById(st);
+        Statistic currStat = s.get();
+        if (currStat == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Date date = currStat.getStartTime();
+        Long dateI = date.getTime() / 1000;
+        Long dateD = new Date().getTime() / 1000;
+        Long D = dateD - dateI;
+        return new ResponseEntity<>(D,HttpStatus.OK);
+    }
 
 }

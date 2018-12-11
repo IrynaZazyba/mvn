@@ -7,7 +7,6 @@
     <@n.navBar />
     <@am.adminMenu>
 
-    List of users
     <div class="col-8 align-self-start" xmlns="http://www.w3.org/1999/html">
         <table class="table">
             <thead class="thead-inverse">

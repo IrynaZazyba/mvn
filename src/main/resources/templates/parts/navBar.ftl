@@ -34,7 +34,7 @@
             </li>
         </ul>
         <#if auth==false>
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0 but" data-toggle="modal"
+            <button type="button" class="btn my-2 my-sm-0 but" data-toggle="modal"
                     data-target="#exampleModalCenter">Log in
             </button>
                    <#else> <span class="headerUser">${username}</span>

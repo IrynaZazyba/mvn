@@ -29,7 +29,7 @@
                     <li>
 
                         <a href="/testsRun?typeId=${t.id}">
-                            <i class="fas fa-briefcase"></i> ${t.type!n/a}
+                            <i class="fas fa-caret-right"></i> ${t.type!n/a}
                         </a>
                     </li>
                 <#--</a>-->
@@ -63,7 +63,7 @@
                     </div>
                     <div class="card-body text-info">
                         <p class="card-text">Some quick example.</p>
-                        <a href="/exeTest?testsId=${ts.id}&questionNum=0" class="btn btn-primary">Go test</a>
+                        <a href="/exeTest?testsId=${ts.id}&questionNum=0" class="btn btn-info">Go test</a>
 
                     </div>
                 </div>

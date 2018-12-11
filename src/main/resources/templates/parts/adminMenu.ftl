@@ -22,11 +22,11 @@
             <li>
 
                 <a href="/user">
-                    <i class="fas fa-briefcase"></i>Edit users
+                    <i class="mr7 fas fa-user"></i>Edit users
                 </a>
             </li>
             <li>
-                <a href="/"><i class="fas fa-briefcase"></i>Add users
+                <a href="/"><i class="mr5 fas fa-user-plus"></i>Add users
                 </a>
             </li>
         <#--</a>-->
