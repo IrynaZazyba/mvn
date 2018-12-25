@@ -3,7 +3,7 @@
 <#import "parts/adminMenu.ftl" as am>
 <#import "parts/login.ftl" as l>
 <@c.page>
-List of users
+
 
 <@n.navBar />
 <@am.adminMenu>

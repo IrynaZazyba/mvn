@@ -22,15 +22,15 @@
             <li>
 
                 <a href="/addTestsType">
-                    <i class="fas fa-briefcase"></i>Add type of tests
+                    <i class="fas fa-briefcase"></i> Добавить раздел
                 </a>
             </li>
             <li>
-                <a href="/addTestsTitle"><i class="fas fa-briefcase"></i>Add title
+                <a href="/addTestsTitle"><i class="fas fa-briefcase"></i> Добавить тест
                 </a>
             </li>
             <li>
-                <a href="/addQuestionAnswer"><i class="fas fa-briefcase"></i>Add questions+answers
+                <a href="/addQuestionAnswer"><i class="fas fa-briefcase"></i> Добавить вопросы и ответы
                 </a>
             </li>
         <#--</a>-->

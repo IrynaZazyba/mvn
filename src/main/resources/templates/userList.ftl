@@ -11,9 +11,9 @@
         <table class="table">
             <thead class="thead-inverse">
             <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th></th>
+                <th class="tabletop">Логин</th>
+                <th class="tabletop">Роль</th>
+                <th class="tabletop"></th>
             </tr>
             </thead>
             <#list users as user>

@@ -12,7 +12,7 @@
     <form action="/user" method="post">
         <div class="form-group row">
             <div class="col-2">
-                <span>Login</span>
+                <span>Логин</span>
             </div>
             <div class="col-3">
                 <input class="form-control" type="text" value="${user.username!"n/a"}" name="username">
@@ -20,7 +20,7 @@
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <span>Password</span>
+                <span>Пароль</span>
             </div>
             <div class="col-3">
                 <input class="form-control" type="password" value="${user.password!"n/a"}" name="password">
@@ -29,7 +29,7 @@
         <div class="form-group row">
 
             <div class="col-2">
-                <label>User role</label>
+                <label>Роль</label>
             </div>
             <div class="col-3">
                 <#list roles as role>
@@ -46,7 +46,7 @@
                 <input type="hidden" value="${user.id}" name="userId">
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 
-                <button class="btn btn-outline-info mt10 fr" type="submit">Save</button>
+                <button class="btn btn but mt10 fr" type="submit">Сохранить</button>
             </div>
         </div>
     </form>

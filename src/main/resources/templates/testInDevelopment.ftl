@@ -23,7 +23,7 @@
                     </p>
                     <br>
                     <div class="mauto ta">
-                        <button type="button" class="btn btn-outline-info wth100">Назад</button>
+                        <button type="button" class="btn but wth100">Назад</button>
                     </div>
                 </div>
             </div>

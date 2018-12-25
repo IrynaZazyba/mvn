@@ -73,7 +73,7 @@
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <div><button class="btn btn-outline-info" type="submit">Add</button></div>
+        <div><button class="btn btn butSuccess" type="submit">Add</button></div>
     </form>
     </@at.adminMenuTest>
 </@c.page>

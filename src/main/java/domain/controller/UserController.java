@@ -27,8 +27,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepo;
 
-
-
     @GetMapping
     public String userList(Model model,
                            @AuthenticationPrincipal User user,

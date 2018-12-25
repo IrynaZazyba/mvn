@@ -65,8 +65,7 @@ public class TestsController {
                                @RequestParam String type,
                                Map<String, Object> modl
     ) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-        if (user != null) {
+           if (user != null) {
             modl.put("auth", true);
             modl.put("username", user.getUsername());
             for (Role r : user.getRoles()
@@ -182,8 +181,7 @@ public class TestsController {
         return "addTests";
     }
 
-    @RequestMapping(value = "/addTests",
-            method = RequestMethod.POST)
+    @RequestMapping(value = "/addTests", method = RequestMethod.POST)
     public Object addTests(@AuthenticationPrincipal User author,
                            @RequestParam String type,
                            @RequestParam String title,
@@ -202,7 +200,6 @@ public class TestsController {
 
         Tests titleFromDb = testsRepo.findByTitle(title);
         if (titleFromDb != null) {
-
             return model.put("message", "This title already exist");
         } else {
             tests.setTitle(title);

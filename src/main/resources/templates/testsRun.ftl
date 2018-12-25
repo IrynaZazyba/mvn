@@ -58,12 +58,12 @@
             <#list tests as ts>
             <div class="col-md-3">
 
-                <div class="card border-info mb-3" style="max-width: 18rem;">
-                    <div class="card-header text-info"> <h5>             ${ts.title}</h5>
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header text-success"> <h5>             ${ts.title}</h5>
                     </div>
-                    <div class="card-body text-info">
+                    <div class="card-body text-success">
                         <p class="card-text">Some quick example.</p>
-                        <a href="/exeTest?testsId=${ts.id}&questionNum=0" class="btn btn-info">Go test</a>
+                        <a href="/exeTest?testsId=${ts.id}&questionNum=0" class="btn btn-success butSuccess">Go test</a>
 
                     </div>
                 </div>

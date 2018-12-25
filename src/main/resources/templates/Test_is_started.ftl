@@ -18,14 +18,14 @@
                  <#--</#list>-->
             <#--</div>-->
         <#--</div>-->
-        <div class="col-12 text-center">
-            <h1>Test already running!</h1>
+        <div class="col-12 text-center mt10">
+            <h1>Тест уже запущен!</h1>
             <div class="row">
                 <div class="col-6">
-                    <button type="button" class="btn btn-primary"><a href="/exeTest?stat=${statId}&testsId=${testId}&questionNum=${questNum}">Продолжить</a> </button>
+                    <button type="button" class="btn btn-primary butSuccess"><a href="/exeTest?stat=${statId}&testsId=${testId}&questionNum=${questNum}">Продолжить</a> </button>
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-danger"><a href="/stopTest?stat=${statId}&testsId=${testId}&questionNum=${questNum}">Отменить прохождение</a></button>
+                    <button type="button" class="btn btn-danger"><a href="/stopTest?stat=${statId}&testsId=${testId}&questionNum=${questNum}">Начать заново</a></button>
                 </div>
             </div>
         </div>

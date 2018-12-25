@@ -30,6 +30,9 @@ $(document).ready(function () {
         $('#sidebar').toggleClass('active');
     });
 
+
+
+
     function timer (seconds, tick, result) {
         if (seconds > 0) {
             tick(seconds);

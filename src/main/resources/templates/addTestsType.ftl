@@ -19,7 +19,7 @@
 
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <div>
-                <button class="btn btn-outline-info mt10" type="submit">Add
+                <button class="btn btn butSuccess mt10" type="submit">Add
                 </button>
             </div>
             </div>
