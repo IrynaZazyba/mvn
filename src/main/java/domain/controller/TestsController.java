@@ -39,7 +39,7 @@ public class TestsController {
                            Map<String, Object> modl,
                            @RequestParam(value = "result", required = false) String result
     ) {
-        if(result!=null){
+        if (result != null) {
             modl.put("result", result);
         }
         if (user != null) {
@@ -65,7 +65,7 @@ public class TestsController {
                                @RequestParam String type,
                                Map<String, Object> modl
     ) {
-           if (user != null) {
+        if (user != null) {
             modl.put("auth", true);
             modl.put("username", user.getUsername());
             for (Role r : user.getRoles()
@@ -83,7 +83,7 @@ public class TestsController {
         boolean result = true;
         Tests tests = new Tests();
         TestsType testsType = testsTypeRepo.findByType(type);
-        if (testsType != null || type=="") {
+        if (testsType != null || type == "") {
             result = false;
         } else {
             TestsType t = new TestsType();
@@ -101,7 +101,7 @@ public class TestsController {
                                 @RequestParam(value = "result", required = false) String result
     ) {
 
-        if(result!=null){
+        if (result != null) {
             modl.put("result", result);
         }
 
@@ -147,12 +147,12 @@ public class TestsController {
             modl.put("auth", false);
         }
 
-        boolean result =true;
-        if(test.getTitle()!=null && test.getTitle()!=""){
+        boolean result = true;
+        if (test.getTitle() != null && test.getTitle() != "") {
             test.setAuthor(user);
             testsRepo.save(test);
-          }else{
-            result=false;
+        } else {
+            result = false;
         }
 
         return "redirect:/addTestsTitle?result=" + result;
@@ -358,21 +358,20 @@ public class TestsController {
         if (tq.size() < 3) {
             model.addAttribute("testsType", testsTypeRepo.findAll());
 
-                if (user != null)
-                {
-                    modl.put("auth", true);
-                    modl.put("username", user.getUsername());
-                    for (Role r : user.getRoles()
-                            ) {
-                        if (r.compareTo(Role.ADMIN) == 0) {
-                            modl.put("userrole", Role.ADMIN);
-                        } else {
-                            modl.put("userrole", Role.USER);
-                        }
+            if (user != null) {
+                modl.put("auth", true);
+                modl.put("username", user.getUsername());
+                for (Role r : user.getRoles()
+                        ) {
+                    if (r.compareTo(Role.ADMIN) == 0) {
+                        modl.put("userrole", Role.ADMIN);
+                    } else {
+                        modl.put("userrole", Role.USER);
                     }
-                } else {
-                    modl.put("auth", false);
                 }
+            } else {
+                modl.put("auth", false);
+            }
 
             return "testInDevelopment";
         }
@@ -467,8 +466,8 @@ public class TestsController {
             currStat.setEndTime(new Date());
             statRepo.save(currStat);
             float res = ((float) currStat.getRightAnswer() / (float) currStat.getCountQuest()) * 100;
-
-            model.addAttribute("result", String.format("%.2f", res));
+            int result = Math.round(res);
+            model.addAttribute("result",  result);
 
             return "testEnded";
         }
@@ -479,7 +478,7 @@ public class TestsController {
     }
 
 
-    private Boolean checkTime(Statistic currStat){
+    private Boolean checkTime(Statistic currStat) {
         Date date = currStat.getStartTime();
         long dateI = date.getTime() / 1000;
         long dateD = new Date().getTime() / 1000;
@@ -495,8 +494,7 @@ public class TestsController {
                              @AuthenticationPrincipal User user,
                              @RequestParam(value = "testsId") Long testsId,
                              @RequestParam(value = "stat") Long st
-    )
-    {
+    ) {
         Optional<Statistic> s = statRepo.findById(st);
         Statistic stat = s.get();
         System.out.println(stat.getTestStUsr().getId());
@@ -513,8 +511,7 @@ public class TestsController {
     @RequestMapping(value = "/checkTimer", method = RequestMethod.GET, produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> checkTimer(Model model,
-                                           @RequestParam(value = "stat") Long st)
-    {
+                                           @RequestParam(value = "stat") Long st) {
         Optional<Statistic> s = statRepo.findById(st);
         Statistic currStat = s.get();
         if (currStat == null) {
@@ -524,7 +521,7 @@ public class TestsController {
         Long dateI = date.getTime() / 1000;
         Long dateD = new Date().getTime() / 1000;
         Long D = dateD - dateI;
-        return new ResponseEntity<>(D,HttpStatus.OK);
+        return new ResponseEntity<>(D, HttpStatus.OK);
     }
 
 }

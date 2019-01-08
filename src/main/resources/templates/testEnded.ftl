@@ -2,19 +2,17 @@
 
 <@c.page>
 
-<div class="wrap">
+<section class="container">
+
+    <h3>Результат</h3>
+
     <div class="row">
-        <div class="circle-container">
-            <h3>Photoshop</h3>
-            <div class="circlestat" data-dimension="200" data-text="55%" data-width="30" data-fontsize="38"
-                 data-percent="70"
-                 data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd">
-
-
-            </div>
+        <div class="col-lg-2">
+            <div id="test-circle"></div>
         </div>
+
     </div>
-</div>
+</section>
 
 
 </@c.page>
