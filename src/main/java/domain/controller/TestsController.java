@@ -467,7 +467,12 @@ public class TestsController {
             statRepo.save(currStat);
             float res = ((float) currStat.getRightAnswer() / (float) currStat.getCountQuest()) * 100;
             int result = Math.round(res);
-            model.addAttribute("result",  result);
+
+            Optional<Tests> currTest = testsRepo.findById(testsId);
+            Tests currentTest = currTest.get();
+            model.addAttribute("title", currentTest.getTitle());
+            model.addAttribute("result", result);
+
 
             return "testEnded";
         }
