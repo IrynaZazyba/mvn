@@ -11,7 +11,7 @@
     <link href="../css/style.css" rel="stylesheet" />
 
 
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/jquery.circliful.min.js"></script>
 </head>
 <body class="bodyBackground">
