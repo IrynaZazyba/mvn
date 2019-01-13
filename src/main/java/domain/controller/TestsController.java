@@ -37,7 +37,8 @@ public class TestsController {
     @GetMapping(path = "/addTestsType")
     public String addTests(@AuthenticationPrincipal User user,
                            Map<String, Object> modl,
-                           @RequestParam(value = "result", required = false) String result
+                           @RequestParam(value = "result", required = false) String result,
+                           Model model
     ) {
         if (result != null) {
             modl.put("result", result);
@@ -56,6 +57,9 @@ public class TestsController {
         } else {
             modl.put("auth", false);
         }
+
+        int menu = 1;
+        model.addAttribute("menu", menu);
         return "addTestsType";
     }
 
@@ -98,14 +102,12 @@ public class TestsController {
     @GetMapping(path = "/addTestsTitle")
     public String addTestsTitle(@AuthenticationPrincipal User user,
                                 Map<String, Object> modl,
-                                @RequestParam(value = "result", required = false) String result
+                                @RequestParam(value = "result", required = false) String result,
+                                Model model
     ) {
-
         if (result != null) {
             modl.put("result", result);
         }
-
-
         Iterable<TestsType> testsType = testsTypeRepo.findAll();
         modl.put("testsType", testsType);
 
@@ -123,6 +125,8 @@ public class TestsController {
         } else {
             modl.put("auth", false);
         }
+        int menu = 2;
+        model.addAttribute("menu", menu);
         return "addTestsTitle";
     }
 
@@ -217,7 +221,8 @@ public class TestsController {
                            @RequestParam String answer2, @RequestParam boolean ck_answer2,
                            @RequestParam String answer3, @RequestParam boolean ck_answer3,
                            @RequestParam String answer4, @RequestParam boolean ck_answer4,
-                           Map<String, Object> model) {
+                           Map<String, Object> model,
+                           RedirectAttributes redirectAttributes) {
 
         questionsRepo.save(questions);
 
@@ -253,13 +258,17 @@ public class TestsController {
             answersRepo.save(ans4);
         }
 
-        return "redirect:/testsList";
+        String answer = "Данные успешно добавлены";
+        redirectAttributes.addAttribute("answer", answer);
+        return "redirect:/addQuestionAnswer";
     }
 
 
     @GetMapping(path = "/addQuestionAnswer")
     public String addGetQuest(@AuthenticationPrincipal User usr,
-                              Map<String, Object> modl
+                              Map<String, Object> modl,
+                              Model model,
+                              @RequestParam(value = "answer", required = false) String answer
     ) {
         if (usr != null) {
             modl.put("auth", true);
@@ -278,7 +287,9 @@ public class TestsController {
 
         Iterable<Tests> tests = testsRepo.findAll();
         modl.put("tests", tests);
-
+        int menu = 3;
+        model.addAttribute("menu", menu);
+        model.addAttribute("answer",answer);
         return "addQuestion";
     }
 
@@ -310,6 +321,7 @@ public class TestsController {
         if (typeId != null) {
             Set<Tests> t = testsRepo.findByTypeId(typeId);
             model.addAttribute("tests", testsRepo.findByTypeId(typeId));
+            model.addAttribute("typeId", typeId);
 
         }
 
@@ -394,6 +406,7 @@ public class TestsController {
             Statistic stat = new Statistic();
             stat.setTestStUsr(user);
             stat.setStartTime(new Date());
+            stat.setStartTimeFirst(new Date());
             stat.setCountQuest(tq.size());
             stat.setAmountAnswers(0);
             stat.setRightAnswer(0);
@@ -452,10 +465,7 @@ public class TestsController {
                     }
                 }
             }
-
         }
-
-
         currStat.setAmountAnswers(currStat.getAmountAnswers() + 1);
         if (rightAns == 1 && checkTime(currStat)) {
             currStat.setRightAnswer(currStat.getRightAnswer() + 1);

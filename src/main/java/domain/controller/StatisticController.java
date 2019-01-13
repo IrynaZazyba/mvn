@@ -11,9 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.Period;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class StatisticController {
@@ -43,7 +46,11 @@ public class StatisticController {
 
         Set<Statistic> s = statRepo.findByTestStUsr(user);
         model.addAttribute("statistics", s);
+        model.addAttribute("user",user);
+
         return "statistics";
     }
+
+
 
 }

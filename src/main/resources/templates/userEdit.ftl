@@ -8,8 +8,8 @@
     <@am.adminMenu>
 
 
-
-    <form action="/user" method="post">
+<h3 class="ml">Редактирование пользователя <span class="textitalic">${user.username!n/a}</span></h3>
+    <form class="ml mmain20" action="/user" method="post">
         <div class="form-group row">
             <div class="col-2">
                 <span>Логин</span>

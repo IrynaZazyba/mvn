@@ -6,8 +6,8 @@
 
     <@n.navBar />
     <@am.adminMenu>
-
-    <div class="col-8 align-self-start" xmlns="http://www.w3.org/1999/html">
+    <h3 class="ml">Редактирование пользователей</h3>
+    <div class="col-8 align-self-start mt10 mmain20" xmlns="http://www.w3.org/1999/html">
         <table class="table">
             <thead class="thead-inverse">
             <tr>

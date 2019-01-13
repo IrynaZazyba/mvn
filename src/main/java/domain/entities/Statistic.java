@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LongSummaryStatistics;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ladyi on 18.11.2018.
@@ -24,6 +25,8 @@ public class Statistic {
     private int rightAnswer;
     private int countQuest;
     private int amountAnswers;
+
+    private Date startTimeFirst;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_st_test")
@@ -97,4 +100,25 @@ public class Statistic {
     public void setAmountAnswers(int amountAnswers) {
         this.amountAnswers = amountAnswers;
     }
+
+    public Date getStartTimeFirst() {
+        return startTimeFirst;
+    }
+
+    public void setStartTimeFirst(Date startTimeFirst) {
+        this.startTimeFirst = startTimeFirst;
+    }
+
+    TimeUnit timeUnit;
+
+    public long getDateDiff() {
+        if(endTime==null) {
+          return -1;
+        }else{ long diffInMillies = endTime.getTime() - startTimeFirst.getTime();
+            return timeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        }
+    }
+
+
 }

@@ -7,7 +7,6 @@
 
 <@n.navBar />
 <@am.adminMenu>
-<h3>
-Admin menu</h3>
+
 </@am.adminMenu>
 </@c.page>

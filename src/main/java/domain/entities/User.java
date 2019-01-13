@@ -5,13 +5,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class User implements UserDetails{
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String idSubString;
     private String username;
@@ -19,13 +20,19 @@ public class User implements UserDetails{
     private boolean active;
     private String email;
 
-    @ElementCollection(targetClass = Role.class,fetch =FetchType.EAGER)
-    @CollectionTable(name="user_role",joinColumns = @JoinColumn(name="user_id"))
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "testStUsr", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Statistic> statistics = new HashSet<Statistic>();
+
+//    public User() {
+//        roles = Collections.singleton(Role.USER);
+//    }
+
+
 
     public Long getId() {
         return id;

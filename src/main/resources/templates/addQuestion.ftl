@@ -5,9 +5,15 @@
 <@c.page>
     <@n.navBar/>
     <@at.adminMenuTest>
+
+<#if answer??>
+    <div class="alert alert-success" role="alert">${answer}</div>
+</#if>
+    <h3 class="ml">Добавление вопросов и ответов</h3>
+
     <form action="/addQuestionAnswer" method="post" xmlns="http://www.w3.org/1999/html">
-        <div class="form-group">
-            <label> Type: <select class="form-control" name="type">
+        <div class="form-group mmain20">
+            <label> Название: <select class="form-control" name="test">
                 <#list tests as t>
                     <option value="${t.id}">${t.title}</option>
                 </#list>
@@ -15,7 +21,7 @@
         </div>
 
         <div>
-            <label for="exampleFormControlInput1"> Questions : </label> <textarea class="form-control" type="text"
+            <label for="exampleFormControlInput1"> Вопрос : </label> <textarea class="form-control" type="text"
                                                                          name="quest" rows="5" ></textarea>
 
         </div>
@@ -73,7 +79,7 @@
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <div><button class="btn btn butSuccess" type="submit">Add</button></div>
+        <div><button class="btn btn butSuccess" type="submit">Добавить</button></div>
     </form>
     </@at.adminMenuTest>
 </@c.page>

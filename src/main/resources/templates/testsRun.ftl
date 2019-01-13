@@ -24,16 +24,19 @@
         <#--</li>-->
         <#--</ul>-->
         <#--</li>-->
-                <#list testsType as t>
-                <#--<a href="/testsRun?typeId=${t.id}">-->
-                    <li>
-
-                        <a href="/testsRun?typeId=${t.id}">
-                            <i class="fas fa-caret-right"></i> ${t.type!n/a}
-                        </a>
-                    </li>
-                <#--</a>-->
-                </#list>
+            <#list testsType as t>
+            <#--<a href="/testsRun?typeId=${t.id}">-->
+                <#if typeId?? && t.id==typeId>
+                <li class="active">
+                <#else>
+                <li>
+                </#if>
+                <a href="/testsRun?typeId=${t.id}">
+                    <i class="fas fa-caret-right"></i> ${t.type!n/a}
+                </a>
+            </li>
+            <#--</a>-->
+            </#list>
 
         </ul>
 
@@ -54,33 +57,33 @@
         <div class="container">
 
             <div class="row">
-        <#if tests??>
-            <#list tests as ts>
-            <div class="col-md-3">
+                <#if tests??>
+                    <#list tests as ts>
+                        <div class="col-md-3">
 
-                <div class="card border-success mb-3" style="max-width: 18rem;">
-                    <div class="card-header text-success"> <h5>             ${ts.title}</h5>
-                    </div>
-                    <div class="card-body text-success">
-                        <p class="card-text">Some quick example.</p>
-                        <a href="/exeTest?testsId=${ts.id}&questionNum=0" class="btn btn-success butSuccess">Go test</a>
+                            <div class="card border-success mb-3" style="max-width: 18rem;">
+                                <div class="card-header text-success"><h5>             ${ts.title}</h5>
+                                </div>
+                                <div class="card-body text-success">
+                                    <p class="card-text">Some quick example.</p>
+                                    <a href="/exeTest?testsId=${ts.id}&questionNum=0"
+                                       class="btn btn-success butSuccess">Go
+                                        test</a>
 
-                    </div>
-                </div>
+                                </div>
+                            </div>
 
 
+                        </div>
+                    <#--<button type="button" class="btn btn-info">-->
 
+                    <#--<a href="/exeTest?testsId=${ts.id}&questionNum=0">-->
+                    <#--${ts.title}-->
+                    <#--</a>-->
+                    <#--</button>-->
+                    </#list>
 
-            </div>
-            <#--<button type="button" class="btn btn-info">-->
-
-            <#--<a href="/exeTest?testsId=${ts.id}&questionNum=0">-->
-            <#--${ts.title}-->
-            <#--</a>-->
-            <#--</button>-->
-            </#list>
-
-        </#if>
+                </#if>
             </div>
         </div>
     </div>

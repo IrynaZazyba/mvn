@@ -29,15 +29,20 @@
             <#--<a class="nav-link" href="/adminPanel">Admin panel</a>-->
             <#--</li>-->
             </#if>
+            <#if userrole?? && (userrole=="USER" ||userrole=="ADMIN")>
+                <li class="nav-item">
+                    <a class="nav-link" href="/getStatistics">Статистика</a>
+                </li></#if>
             <li class="nav-item">
-                <a class="nav-link" href="#">О нас</a>
+                <a class="nav-link" href="/aboutAs">О нас</a>
             </li>
         </ul>
         <#if auth==false>
             <button type="button" class="btn my-2 my-sm-0 but" data-toggle="modal"
                     data-target="#exampleModalCenter">Войти
             </button>
-                   <#else> <span class="headerUser badge bg-color">${username}</span>
+        <#else>
+            <button type="button" class="btn btn butSuccess mr7"><a href="/editProfile">${username}</a></button>
             <@l.logout />
         </#if>
 

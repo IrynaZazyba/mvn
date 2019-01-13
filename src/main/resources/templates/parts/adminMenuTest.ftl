@@ -19,20 +19,42 @@
         <#--</ul>-->
         <#--</li>-->
         <#--<a href="/testsRun?typeId=${t.id}">-->
-            <li>
-
+            <#if menu??&&menu==1>
+            <li class="active">
                 <a href="/addTestsType">
                     <i class="fas fa-briefcase"></i> Добавить раздел
                 </a>
             </li>
-            <li>
+            <#else>
+                <li>
+                    <a href="/addTestsType">
+                        <i class="fas fa-briefcase"></i> Добавить раздел
+                    </a>
+                </li>
+            </#if>
+    <#if menu??&&menu==2>
+               <li  class="active">
                 <a href="/addTestsTitle"><i class="fas fa-briefcase"></i> Добавить тест
                 </a>
             </li>
-            <li>
+    <#else>
+        <li>
+            <a href="/addTestsTitle"><i class="fas fa-briefcase"></i> Добавить тест
+            </a>
+        </li>
+    </#if>
+    <#if menu??&&menu==3>
+            <li class="active">
                 <a href="/addQuestionAnswer"><i class="fas fa-briefcase"></i> Добавить вопросы и ответы
                 </a>
             </li>
+    <#else>
+        <li>
+            <a href="/addQuestionAnswer"><i class="fas fa-briefcase"></i> Добавить вопросы и ответы
+            </a>
+        </li>
+    </#if>
+
         <#--</a>-->
 
         </ul>

@@ -6,9 +6,11 @@
     <@n.navBar/>
     <@at.adminMenuTest>
     <div>
+        <h3 class="ml">Добавление раздела</h3>
+
         <form action="/addTestsType" method="post" xmlns="http://www.w3.org/1999/html">
-            <div class="form-group col-3">
-                <label> Test type :</label>
+            <div class="form-group col-3 mmain20">
+                <label> Раздел :</label>
                 <input class="form-control" type="text" name="type"/>
                 <#if result??>
                     <#if result="true">
@@ -19,7 +21,7 @@
 
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <div>
-                <button class="btn btn butSuccess mt10" type="submit">Add
+                <button class="btn btn butSuccess mt10" type="submit">Добавить
                 </button>
             </div>
             </div>

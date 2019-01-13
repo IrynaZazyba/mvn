@@ -6,15 +6,17 @@
     <@n.navBar/>
     <@at.adminMenuTest>
 
+    <h3 class="ml">Добавление названия теста</h3>
+
     <form action="/addTestsTitle" method="post">
-        <div class="form-group col-4">
-            <label> Type: <select class="form-control" name="type">
+        <div class="form-group col-4 mmain20">
+            <label> Раздел: <select class="form-control" name="type">
                 <#list testsType as tt>
                     <option value="${tt.id}">${tt.type}</option>
                 </#list>
             </select>
                 <div>
-                    <label class="mt10"> Tests title :</label>
+                    <label class="mt10"> Название теста:</label>
                     <input class="form-control" type="text" name="title"/> ${message?ifExists}
             </label>
             <#if result??>
@@ -25,7 +27,7 @@
             </#if>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <div>
-                <button class="btn btn butSuccess mt10" type="submit">Add
+                <button class="btn btn butSuccess mt10" type="submit">Добавить
                 </button>
             </div>
         </div>

@@ -19,19 +19,31 @@
         <#--</ul>-->
         <#--</li>-->
         <#--<a href="/testsRun?typeId=${t.id}">-->
-            <li>
-
-                <a href="/user">
-                    <i class="mr7 fas fa-user"></i> Редактировать пользоватетлей
+    <#if menu?? && menu==2>
+            <li class="active">
+                <a href="/user"><i class="mr7 fas fa-user"></i> Редактировать пользователей
                 </a>
             </li>
-            <li>
-                <a href="/"><i class="mr5 fas fa-user-plus"></i>Добавить пользователя
+    <#else>
+        <li>
+            <a href="/user"><i class="mr7 fas fa-user"></i> Редактировать пользователей
+            </a>
+        </li>
+    </#if>
+    <#if menu?? && menu==1>
+
+        <li class="active">
+                <a href="/addUser"><i class="mr5 fas fa-user-plus"></i>Добавить пользователя
                 </a>
             </li>
         <#--</a>-->
-
-        </ul>
+<#else>
+    <li>
+        <a href="/addUser"><i class="mr5 fas fa-user-plus"></i>Добавить пользователя
+        </a>
+    </li>
+</#if>
+</ul>
 
     </nav>
     <div id="content">

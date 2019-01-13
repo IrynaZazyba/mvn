@@ -37,49 +37,41 @@
                     <a class="nav-link" href="/getStatistics">Статистика</a>
                 </li></#if>
             <li class="nav-item">
-                <a class="nav-link" href="aboutAs">О нас</a>
+                <a class="nav-link" href="#">О нас</a>
             </li>
         </ul>
         <#if auth==false>
             <button type="button" class="btn my-2 my-sm-0 but" data-toggle="modal"
                     data-target="#exampleModalCenter">Войти
             </button>
-        <#else> <button  type="button" class="btn btn butSuccess mr7"><a href="/editProfile"> ${username}</a></button>
+        <#else>
+            <button type="button" class="btn btn butSuccess mr7"><a href="/editProfile"> ${username}</a></button>
             <@l.logout />
         </#if>
 
     </div>
 
 </nav>
-<div class="color-for-bar bgstart"></div>
+<div class="bgabout header-in-building-page">
+    <diV class="about">
 
-<div class="container">
-    <div class="row margintotop">
-        <div class="col-12 pmain20">
-            <h4 class="texal">Добро пожаловать в автоматизированную систему тестирования "АСТ Тест".</h4><h5 class="texal">Мы поможем сделать процесс
-                тестирования простым и понятным.</h5>
-            <div class="row mmain20">
-                <div class="col-md-4">
-                    <div class="login-icon">
-                        <center><i class="far fa-thumbs-up texal fcolor"></i></center>
-                    </div>
-                    <h5 class="texal mcol">Удобство использования</h5>
-                    <h6 class="texal">Не требует скачивания и установки.</h6>
-                </div>
-                <div class="col-md-4">
-                    <center><i class="fas fa-list-ol texal fcolor"></i></center>
-                    <h5 class="texal mcol">Универсальность</h5>
-                    <h6 class="texal">Тестирование может выполняться по любым отраслям знаний.</h6>
-                </div>
-                <div class="col-md-4">
-                    <center><i class="fas fa-wrench texal fcolor"></i></center>
-                    <h5 class="texal mcol">Гибкость</h5>
-                    <h6 class="texal">Широкие возможности редактирования данных в системе.</h6>
-                </div>
-            </div>
+    <h1>АСТ Тест</h1>
+    <h4>"АСТ Тест" - эффективный сервис,предназначеный для прохождения тестирования.</h4>
+    <h4>Мы оказываем поддержку в развитии вашей системы обучения.</h4>
+        <h4>В настоящее время сервис находится в развитии.</h4>
+
+        <h5 class="mmain20">Для связи воспользуйтесь Skype: ASTTest</h5>
+    <h5>или e-mail: asttest@gmail.com. </h5>
+</div>
+</diV>
+<div>
+    <div class="col-12 pmain20">
+
+
+        <div class="row mmain20">
+
         </div>
     </div>
-
 
 
     <!-- Modal -->

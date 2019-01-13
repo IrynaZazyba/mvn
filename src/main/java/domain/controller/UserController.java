@@ -46,7 +46,9 @@ public class UserController {
             modl.put("auth", false);
         }
 
+        int menu=2;
         model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("menu", menu);
         return "userList";
     }
 
@@ -71,8 +73,10 @@ public class UserController {
             modl.put("auth", false);
         }
 
+        int menu=2;
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
+        model.addAttribute("menu", menu);
         return "userEdit";
     }
 
@@ -97,4 +101,6 @@ public class UserController {
         userRepo.save(user);
         return "redirect:/user";
     }
+
+
 }
