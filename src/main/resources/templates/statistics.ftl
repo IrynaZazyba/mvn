@@ -31,7 +31,11 @@
                         <td>${s.getDateDiff()}</td>
                     </#if>
                     <td>${s.testStTst.title!"n/a"}</td>
+                <#if s.getDateDiff()==-1>
+                <td> -- </td>
+                <#else>
                     <td>${(s.rightAnswer/s.amountAnswers)*100!"n/a"}%</td>
+                </#if>
                 </tr>
                 </tbody>
             </#list>

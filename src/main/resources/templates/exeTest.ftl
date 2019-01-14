@@ -47,6 +47,11 @@
                 <#---->
                 <#--</a>-->
                 </button>
+                <button type="button" class="btn btn-info but">
+                <a href="/testsRun">
+Прервать
+                </a>
+                </button>
             </form>
 
         </div>

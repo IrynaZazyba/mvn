@@ -207,7 +207,7 @@ public class MainController {
             modl.put("auth", false);
         }
 
-        if (userRepository.findByUsername(username) != null) {
+        if (userRepository.findByUsername(username) != null&&username!=user.getUsername()) {
             String userExist = "Пользователь с данным именем уже существует";
             redirectAttributes.addAttribute("userExist", userExist);
         } else {

@@ -67,8 +67,7 @@
                                 <div class="card-body text-success">
                                     <#--<p class="card-text">Some quick example.</p>-->
                                     <a href="/exeTest?testsId=${ts.id}&questionNum=0"
-                                       class="btn btn-success butSuccess">Go
-                                        test</a>
+                                       class="btn btn-success butSuccess">Начать</a>
 
                                 </div>
                             </div>
