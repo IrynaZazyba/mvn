@@ -79,15 +79,54 @@ public class UserController {
         model.addAttribute("menu", menu);
         return "userEdit";
     }
+    @GetMapping("/delete")
+    public String userListDelete(Model model,
+                           @AuthenticationPrincipal User user,
+                           Map<String, Object> modl) {
+        if (user != null) {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+            ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
 
+        int menu=3;
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("menu", menu);
+        return "userListDelete";
+    }
+
+    @GetMapping("/delete/{user}")
+    public String userDelete(
+            @PathVariable User user,
+            Model model,
+            @AuthenticationPrincipal User usr,
+            Map<String, Object> modl
+            ) {
+
+        userRepo.delete(user);
+        return "redirect:/user/delete";
+    }
 
 
     @PostMapping
     public String userSave(
             @RequestParam String username,
+            @RequestParam String password,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user) {
         user.setUsername(username);
+        if(password.length()!=0){
+            user.setPassword(password);
+        }
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
                 .collect(Collectors.toSet());

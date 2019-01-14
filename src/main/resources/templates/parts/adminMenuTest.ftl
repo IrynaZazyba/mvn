@@ -3,7 +3,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <strong>BS</strong>
+            <strong>ACT</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -55,12 +55,46 @@
         </li>
     </#if>
 
+
+     <#if menu??&&menu==4>
+               <li  class="active">
+                   <a href="/deleteTestsType"><i class="fas fa-briefcase"></i> Удалить раздел
+                   </a>
+               </li>
+     <#else>
+        <li>
+            <a href="/deleteTestsType"><i class="fas fa-briefcase"></i> Удалить раздел
+            </a>
+        </li>
+     </#if>
+            <#if menu??&&menu==5>
+               <li  class="active">
+                   <a href="/deleteTestsTitle"><i class="fas fa-briefcase"></i> Удалить тест
+                   </a>
+               </li>
+       <#else>
+        <li>
+            <a href="/deleteTestsTitle"><i class="fas fa-briefcase"></i> Удалить тест
+            </a>
+        </li>
+       </#if>
+
+
         <#--</a>-->
 
         </ul>
 
     </nav>
     <div id="content">
+        <nav id="leftmenu" class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
+            </div>
+        </nav>
         <#nested >
     </div>
 

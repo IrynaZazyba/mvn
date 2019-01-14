@@ -9,7 +9,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <strong>BS</strong>
+            <strong>ACT</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -65,7 +65,7 @@
                                 <div class="card-header text-success"><h5>             ${ts.title}</h5>
                                 </div>
                                 <div class="card-body text-success">
-                                    <p class="card-text">Some quick example.</p>
+                                    <#--<p class="card-text">Some quick example.</p>-->
                                     <a href="/exeTest?testsId=${ts.id}&questionNum=0"
                                        class="btn btn-success butSuccess">Go
                                         test</a>

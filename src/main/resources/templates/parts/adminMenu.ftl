@@ -3,7 +3,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <strong>BS</strong>
+            <strong>ACT</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -43,10 +43,34 @@
         </a>
     </li>
 </#if>
+
+
+  <#if menu?? && menu==3>
+
+        <li class="active">
+            <a href="/user/delete"><i class="mr5 fas fa-user-minus"></i>Удалить пользователя
+            </a>
+        </li>
+                <#--</a>-->
+                <#else>
+    <li>
+        <a href="/user/delete"><i class="mr5 fas fa-user-minus"></i>Удалить пользователя
+        </a>
+    </li>
+                </#if>
 </ul>
 
     </nav>
     <div id="content">
+        <nav id="leftmenu" class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
+            </div>
+        </nav>
         <#nested >
     </div>
 

@@ -39,7 +39,8 @@ public class TestsController {
                            Map<String, Object> modl,
                            @RequestParam(value = "result", required = false) String result,
                            Model model
-    ) {
+    )
+    {
         if (result != null) {
             modl.put("result", result);
         }
@@ -63,12 +64,138 @@ public class TestsController {
         return "addTestsType";
     }
 
+    @GetMapping(path = "/deleteTestsType")
+    public String deleteTests(@AuthenticationPrincipal User user,
+                           Map<String, Object> modl,
+                           @RequestParam(value = "result", required = false) String result,
+                           Model model
+    ) {
+        if (result != null) {
+            modl.put("result", result);
+        }
+        if (user != null)
+        {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+            ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        int menu = 4;
+        Iterable<TestsType> testsType = testsTypeRepo.findAll();
+        model.addAttribute("menu", menu);
+        model.addAttribute("testsType", testsType);
+        return "deleteTestsType";
+    }
+
+    @GetMapping(path = "/deleteTestsType/{testType}")
+    public String deleteTestsD(@AuthenticationPrincipal User user,
+                              Map<String, Object> modl,
+                              @RequestParam(value = "result", required = false) String result,
+                              Model model,
+                               @PathVariable TestsType testType
+    )
+    {
+        if (result != null) {
+            modl.put("result", result);
+        }
+        if (user != null)
+        {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+            ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        testsTypeRepo.delete(testType);
+
+        return "redirect:/deleteTestsType";
+    }
+
+    @GetMapping(path = "/deleteTestsTitle")
+    public String deleteTestsTitle(@AuthenticationPrincipal User user,
+                              Map<String, Object> modl,
+                              @RequestParam(value = "result", required = false) String result,
+                              Model model
+    ) {
+        if (result != null) {
+            modl.put("result", result);
+        }
+        if (user != null)
+        {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+            ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        int menu = 5;
+        Iterable<Tests> testsType = testsRepo.findAll();
+        model.addAttribute("menu", menu);
+        model.addAttribute("tests", testsType);
+        return "deleteTestsTitle";
+    }
+
+    @GetMapping(path = "/deleteTestsTitle/{testTitle}")
+    public String deleteTestsTitle(@AuthenticationPrincipal User user,
+                                   Map<String, Object> modl,
+                                   @RequestParam(value = "result", required = false) String result,
+                                   Model model,
+                                   @PathVariable Tests testTitle
+    ) {
+        if (result != null) {
+            modl.put("result", result);
+        }
+        if (user != null)
+        {
+            modl.put("auth", true);
+            modl.put("username", user.getUsername());
+            for (Role r : user.getRoles()
+            ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+       testsRepo.delete(testTitle);
+        return "redirect:/deleteTestsTitle";
+    }
 
     @RequestMapping(value = "/addTestsType", method = RequestMethod.POST)
     public Object addTypeTests(@AuthenticationPrincipal User user,
                                @RequestParam String type,
                                Map<String, Object> modl
-    ) {
+    )
+    {
         if (user != null) {
             modl.put("auth", true);
             modl.put("username", user.getUsername());
@@ -99,12 +226,14 @@ public class TestsController {
     }
 
 
+
     @GetMapping(path = "/addTestsTitle")
     public String addTestsTitle(@AuthenticationPrincipal User user,
                                 Map<String, Object> modl,
                                 @RequestParam(value = "result", required = false) String result,
                                 Model model
-    ) {
+    )
+    {
         if (result != null) {
             modl.put("result", result);
         }
@@ -269,7 +398,8 @@ public class TestsController {
                               Map<String, Object> modl,
                               Model model,
                               @RequestParam(value = "answer", required = false) String answer
-    ) {
+    )
+    {
         if (usr != null) {
             modl.put("auth", true);
             modl.put("username", usr.getUsername());
@@ -293,13 +423,66 @@ public class TestsController {
         return "addQuestion";
     }
 
+    @GetMapping(path = "/editQuestionAnswer")
+    public String editGetQuest(@AuthenticationPrincipal User usr,
+                              Map<String, Object> modl,
+                              Model model,
+                              @RequestParam(value = "testId", required = false) Long testId,
+                               @RequestParam(value = "questId", required = false) Long questId)
+    {
+        if (usr != null) {
+            modl.put("auth", true);
+            modl.put("username", usr.getUsername());
+            for (Role r : usr.getRoles()
+            ) {
+                if (r.compareTo(Role.ADMIN) == 0) {
+                    modl.put("userrole", Role.ADMIN);
+                } else {
+                    modl.put("userrole", Role.USER);
+                }
+            }
+        } else {
+            modl.put("auth", false);
+        }
+
+        if(testId!=null){
+            Optional <Tests> test = testsRepo.findById(testId);
+            modl.put("tests", test.get());
+            Iterable<Tests> testsAll = testsRepo.findAll();
+            modl.put("testsAll", testsAll);
+            Set<Questions> questAll = questionsRepo.findByTest(questId);
+            modl.put("questAll", questAll);
+        }
+        else{
+            Iterable<Tests> tests = testsRepo.findAll();
+            modl.put("testsAll", tests);
+        }
+
+        if(questId!=null){
+            Optional <Questions> quest = questionsRepo.findById(questId);
+            modl.put("quest", quest.get());
+            Set<Questions> questAll = questionsRepo.findByTest(questId);
+            modl.put("quest", questAll);
+        }
+//        else{
+//            Set<Questions> questAll = questionsRepo.findByTest(questId);
+//            modl.put("quest", questAll);
+//        }
+
+        int menu = 3;
+        model.addAttribute("menu", menu);
+
+        return "editQuestion";
+    }
+
 
     @GetMapping(path = "testsRun")
     public String testsRun(Model model,
                            Map<String, Object> modl,
                            @RequestParam(value = "typeId", required = false) Long typeId,
                            @AuthenticationPrincipal User user
-    ) {
+    )
+    {
         if (user != null) {
             modl.put("auth", true);
             modl.put("username", user.getUsername());

@@ -5,7 +5,7 @@
 <#--${message?ifExists}-->
 <#--</div>-->
 
-<form action="/" method="post" class="form-signin">
+<form action="/" method="post" id="login" class="form-signin">
 <#--<img class="mb-4" alt="" width="72" height="72">-->
     <div class="alert alert-danger" role="alert">
     <h5>Неверные учетные данные.</h5>
@@ -23,7 +23,7 @@
         <input type="password" name="password" class="form-control"
                placeholder="Password" id="formGroupExampleInput2"/>
     </div>
-
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     <button type="submit" id="subButton" class="btn butSuccess btn-block">Войти</button>
     <a href="/"><button type="button" id="subButton" class="btn but btn-block mt10">На главную</button></a>
 
