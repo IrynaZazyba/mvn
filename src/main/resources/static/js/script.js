@@ -88,7 +88,24 @@ $(document).ready(function () {
 
     }
 
+    $('#editTest').on('change', '', function (e) {
 
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        if(valueSelected!=null){
+            window.location.href ='/editQuestionAnswer?testId='+valueSelected;
+        }
+
+    });
+    $('#editQuest').on('change', '', function (e) {
+        var test =  $("#editTest option:selected").val();
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        if(valueSelected!=null){
+            window.location.href ='/editQuestionAnswer?testId='+test+'&questId='+valueSelected;
+        }
+
+    });
 
 });
 

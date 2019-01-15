@@ -425,16 +425,16 @@ public class TestsController {
 
     @GetMapping(path = "/editQuestionAnswer")
     public String editGetQuest(@AuthenticationPrincipal User usr,
-                              Map<String, Object> modl,
-                              Model model,
-                              @RequestParam(value = "testId", required = false) Long testId,
+                               Map<String, Object> modl,
+                               Model model,
+                               @RequestParam(value = "testId", required = false) Long testId,
                                @RequestParam(value = "questId", required = false) Long questId)
     {
         if (usr != null) {
             modl.put("auth", true);
             modl.put("username", usr.getUsername());
             for (Role r : usr.getRoles()
-            ) {
+                    ) {
                 if (r.compareTo(Role.ADMIN) == 0) {
                     modl.put("userrole", Role.ADMIN);
                 } else {
@@ -450,8 +450,9 @@ public class TestsController {
             modl.put("tests", test.get());
             Iterable<Tests> testsAll = testsRepo.findAll();
             modl.put("testsAll", testsAll);
-            Set<Questions> questAll = questionsRepo.findByTest(questId);
-            modl.put("questAll", questAll);
+//            Set<Questions> questAll = questionsRepo.findBytest(questId);
+            modl.put("questAll", test.get().getQuestions());
+//            System.out.print(questAll);
         }
         else{
             Iterable<Tests> tests = testsRepo.findAll();
@@ -461,18 +462,88 @@ public class TestsController {
         if(questId!=null){
             Optional <Questions> quest = questionsRepo.findById(questId);
             modl.put("quest", quest.get());
-            Set<Questions> questAll = questionsRepo.findByTest(questId);
-            modl.put("quest", questAll);
+            modl.put("answers", quest.get().getAnswers());
+
         }
-//        else{
-//            Set<Questions> questAll = questionsRepo.findByTest(questId);
-//            modl.put("quest", questAll);
-//        }
+
 
         int menu = 3;
         model.addAttribute("menu", menu);
 
         return "editQuestion";
+    }
+
+    @RequestMapping(value = "/editQuestionAnswer", method = RequestMethod.POST)
+    public Object editQuest(//@ModelAttribute Questions questions,
+                            @RequestParam (value = "answer1",  required = false )String answer1,
+                            @RequestParam (value = "ck_answer1",  required = false )  boolean ck_answer1,
+                            @RequestParam (value = "answer2", required = false)String answer2,
+                            @RequestParam (value = "ck_answer2",  required = false )  boolean ck_answer2,
+                            @RequestParam (value = "answer3", required = false)String answer3,
+                            @RequestParam (value = "ck_answer3",  required = false )  boolean ck_answer3,
+                            @RequestParam (value = "answer4", required = false)String answer4,
+                            @RequestParam (value = "ck_answer4",  required = false )  boolean ck_answer4,
+                            @RequestParam Long questId,
+                            Map<String, Object> model,
+                            RedirectAttributes redirectAttributes) {
+        // questions.setId(questId);
+        //questionsRepo.save(questions);
+        Optional <Questions> quest = questionsRepo.findById(questId);
+        Questions q = quest.get();
+        Set<Answers> ans = q.getAnswers();
+
+
+        //  q.setQuest(questions.getQuest());
+        //  questions.setAnswers(null);
+        //  q.setAnswers(null);
+        for (Answers a: ans
+                ) {
+            //  System.out.print(a.getId());
+            // answersRepo.delete(a);
+        }
+        //   q.setAnswers(null);
+
+//        if (answer1 != "" && answer1 != null) {
+//            Answers ans1 = new Answers();
+//            ans1.setQuestion(q);
+//         //   q.getAnswers().add(ans1);
+//            ans1.setAnswers(answer1);
+//            ans1.setTrues(ck_answer1);
+//            answersRepo.save(ans1);
+//        }
+//
+//        if (answer2 != "" && answer2 != null) {
+//            Answers ans2 = new Answers();
+//            ans2.setQuestion(q);
+//      //      q.getAnswers().add(ans2);
+//            ans2.setAnswers(answer2);
+//            ans2.setTrues(ck_answer2);
+//            answersRepo.save(ans2);
+//        }
+//
+//        if (answer3 != "" && answer3 != null) {
+//            Answers ans3 = new Answers();
+//            ans3.setQuestion(q);
+//      //      q.getAnswers().add(ans3);
+//            ans3.setAnswers(answer3);
+//            ans3.setTrues(ck_answer3);
+//            answersRepo.save(ans3);
+//        }
+//
+//        if (answer4 != "" && answer4 != null) {
+//            Answers ans4 = new Answers();
+//            ans4.setQuestion(q);
+//       //     q.getAnswers().add(ans4);
+//            ans4.setAnswers(answer4);
+//            ans4.setTrues(ck_answer4);
+//            answersRepo.save(ans4);
+//        }
+//
+
+        questionsRepo.save(q);
+        String answer = "Данные успешно добавлены";
+        redirectAttributes.addAttribute("answer", answer);
+        return "redirect:/editQuestionAnswer?testId="+q.getTest().getId()+"&questId="+q.getId();
     }
 
 
@@ -642,8 +713,12 @@ public class TestsController {
 
             for (Answers a : currQuest.getAnswers()) {
                 if (a.isTrues() == true) {
-                    if (a.getId() != option1 && a.getId() != option2 &&
-                            a.getId() != option3 && a.getId() != option4) {
+                    Long aId = a.getId();
+                    if (!aId.equals(option1) &&
+                            !aId.equals(option2) &&
+                            !aId.equals(option3) &&
+                            !aId.equals(option4))
+                     {
                         rightAns = 0;
                     }
                 }

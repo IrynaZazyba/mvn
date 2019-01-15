@@ -5,29 +5,29 @@
 
 <@c.page>
     <@n.navBar/>
-    <@at.adminMenuTest>
 
-    <div class="row">
-        <div class="col-xs-5 col-6 mauto">
-            <div class="project project-info">
-                <div class="shape">
-                    <div class="shape-text">
-                        alert
-                    </div>
+
+<div class="row">
+    <div class="col-xs-5 col-6 mauto">
+        <div class="project project-info">
+            <div class="shape">
+                <div class="shape-text">
+                    alert
                 </div>
-                <div class="project-content">
-                    <h3 class="lead">
-                        Тест в разработке </h3>
-                    <p class="tc">
-                       Извините, тест находится в разработке. Пожалуйста, попробуйте позже
-                    </p>
-                    <br>
-                    <div class="mauto ta">
-                        <button type="button" class="btn but wth100"> <a href="/testsRun">Назад</a></button>
-                    </div>
+            </div>
+            <div class="project-content">
+                <h3 class="lead">
+                </h3>
+                <p class="tc mt10">
+                    Извините, тест находится в разработке. Пожалуйста, попробуйте позже
+                </p>
+                <br>
+                <div class="mauto ta">
+                    <a href="/testsRun"><button type="button" class="btn but wth100"> Назад</button></a>
                 </div>
             </div>
         </div>
     </div>
-    </@at.adminMenuTest>
+</div>
+
 </@c.page>
