@@ -5,7 +5,7 @@
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
 });
-var TIMER = 600;
+var TIMER = 180;
 // $("#subButton").submit(function(e) {
 //
 //     var url = "/login"; // the script where you handle the form input.
