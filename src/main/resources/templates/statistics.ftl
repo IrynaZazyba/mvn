@@ -17,6 +17,7 @@
                     </br>(минуты)
                 </th>
                 <th class="tabletop">Название</th>
+                <th class="tabletop">Количество</th>
                 <th class="tabletop">Результат</th>
             </tr>
             </thead>
@@ -32,10 +33,14 @@
                     </#if>
                     <td>${s.testStTst.title!"n/a"}</td>
                 <#if s.getDateDiff()==-1>
+                    <td> -- </td>
                 <td> -- </td>
                 <#else>
+                <td>${s.rightAnswer!"n/a"} из ${s.amountAnswers!"n/a"}</td>
                     <td>${(s.rightAnswer/s.amountAnswers)*100!"n/a"}%</td>
+
                 </#if>
+
                 </tr>
                 </tbody>
             </#list>
